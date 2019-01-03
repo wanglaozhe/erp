@@ -2,9 +2,9 @@ server:
   port: 80
 erpDatasource:
   driver-class-name: com.mysql.jdbc.Driver
-  url: jdbc:mysql://127.0.0.1:3306/jsh_erp?useUnicode=true&characterEncoding=utf8&useCursorFetch=true&defaultFetchSize=500&allowMultiQueries=true&rewriteBatchedStatements=true&useSSL=false
+  url: jdbc:mysql://139.129.203.216:3306/erp?useUnicode=true&characterEncoding=utf8&useCursorFetch=true&defaultFetchSize=500&allowMultiQueries=true&rewriteBatchedStatements=true&useSSL=false
   username: root
-  password: 1234
+  password: root
 web:
   front:
     base-dir: erp_web
