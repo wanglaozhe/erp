@@ -3,14 +3,19 @@ package com.jsh.erp.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jsh.erp.datasource.entities.App;
+import com.jsh.erp.datasource.entities.User;
+import com.jsh.erp.datasource.entities.UserBusiness;
 import com.jsh.erp.service.app.AppService;
 import com.jsh.erp.service.userBusiness.UserBusinessService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -49,11 +54,38 @@ public class AppController {
             }
         }
         obj.put("dock",dockArray);
+        User user = (User) request.getSession().getAttribute("user");
+        //获取角色
+        List<UserBusiness> list = userBusinessService.getBasicData(String.valueOf(user.getId()), "UserRole");
+        //获取角色的app
+        UserBusiness roleApp = null;
+        if(list != null && list.size() > 0){
+            String values = list.get(0).getValue();
+            if(!StringUtils.isEmpty(values)){
+                List<UserBusiness> roleApps = userBusinessService.getBasicData(values.replace("[", "").replace("]", ""), "RoleAPP");
+                if(roleApps != null && roleApps.size() > 0){
+                    roleApp = roleApps.get(0);
+                }
+            }
 
+        }
+        
         List<App> deskList = appService.findDesk();
         JSONArray deskArray = new JSONArray();
+        List<String> appsList;
         if (null != deskList) {
+            if(!StringUtils.isEmpty(roleApp)){
+                String value = roleApp.getValue();
+                String values = value.substring(1,value.length() - 1);
+                String[] apps = values.split("]\\[");
+                appsList = Arrays.asList(apps);
+            }else{
+                appsList = new ArrayList<>();
+            }
             for (App app : deskList) {
+                if(!appsList.contains(String.valueOf(app.getId()))){
+                    continue;
+                }
                 JSONObject item = new JSONObject();
                 item.put("id", app.getId());
                 item.put("title", app.getName());
