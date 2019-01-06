@@ -76,6 +76,7 @@
 		</dependency>
 	</dependencies>
 
+	<!--
 	<repositories>
 		<repository>
 			<id>spring-snapshots</id>
@@ -94,6 +95,7 @@
 			</snapshots>
 		</repository>
 	</repositories>
+	-->
 
 	<pluginRepositories>
 		<pluginRepository>
@@ -114,6 +116,7 @@
 		</pluginRepository>
 	</pluginRepositories>
 
+	<!--
 	<build>
 		<finalName>jshERP2.0</finalName>
 		<plugins>
@@ -157,6 +160,50 @@
 					<target>1.7</target>
 				</configuration>
 			</plugin>
+
 		</plugins>
+
 	</build>
+	-->
+
+	<build>
+
+		<!-- 打成jar包的名称 -->
+
+		<finalName>erp</finalName>
+
+		<plugins>
+
+			<!-- 需要引用的jar包 -->
+
+			<plugin>
+
+				<groupId>org.springframework.boot</groupId>
+
+				<artifactId>spring-boot-maven-plugin</artifactId>
+
+			</plugin>
+
+		</plugins>
+
+
+
+		<!-- <finalName>gateway</finalName> -->
+
+	</build>
+
+	<!-- 仓库地址 -->
+
+	<repositories>
+
+		<repository>
+
+			<id>spring-milestone</id>
+
+			<url>http://repo.spring.io/libs-release</url>
+
+		</repository>
+
+	</repositories>
+
 </project>
